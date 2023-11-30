@@ -13,7 +13,7 @@
     }
 
     .arrow {
-      border: solid rgb(255, 255, 255);
+      border: solid black;
       border-width: 0 3px 3px 0;
       display: inline-block;
       padding: 3px;
@@ -48,7 +48,7 @@
     }
 
     th {
-      background-color: #17273b;
+      background-color: #072f60;
       color: #fff;
     }
 
@@ -73,7 +73,7 @@
     }
 
     .arrow-button:hover {
-      background-color: #45a049;
+      background-color: #072f60;
     }
 
     #overlay {
@@ -134,7 +134,7 @@
     }
 
     #popup button:hover {
-      background-color: #45a049;
+      background-color: #072f60;
     }
 
     #close {
@@ -208,8 +208,6 @@
 
       // Initial data fetch when the page loads
       fetchAndDisplayData();
-
-      // ... (your existing script content) ...
     });
 
     function selectAll(checkbox) {
@@ -235,21 +233,20 @@
     function clearPopup() {
       const overlay = document.getElementById('overlay');
       const popup = document.getElementById('popup');
+      const workNumberInput = document.getElementById('workNumber');
       const textarea = document.getElementById('workDetails');
-      const input = document.getElementById('workNumber');
 
       overlay.style.display = 'none';
       popup.style.display = 'none';
+      workNumberInput.value = '';
       textarea.value = '';
-      input.value = '';
     }
 
     function assignWork() {
       const overlay = document.getElementById('overlay');
       const popup = document.getElementById('popup');
+      const workNumberInput = document.getElementById('workNumber');
       const textarea = document.getElementById('workDetails');
-      const input = document.getElementById('workNumber');
-
 
       const checkboxes = document.querySelectorAll('.select-individual:checked');
       if (checkboxes.length === 0) {
@@ -257,10 +254,9 @@
         return;
       }
 
-      // Get the work details from the textarea
+      // Get the work number and work details from the input fields
+      const workNumber = workNumberInput.value;
       const workDetails = textarea.value;
-      const worknumber = input.value;
-
 
       // Get the register numbers of selected students
       const registerNumbers = Array.from(checkboxes).map(checkbox => {
@@ -275,9 +271,9 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          work_number: workNumber,
           register_numbers: registerNumbers,
           work_details: workDetails,
-          work_number: worknumber
         }),
       })
         .then(response => response.json())
@@ -292,6 +288,7 @@
           // Close the popup
           overlay.style.display = 'none';
           popup.style.display = 'none';
+          workNumberInput.value = '';
           textarea.value = '';
         })
         .catch(error => {
@@ -299,9 +296,7 @@
           alert('Error assigning work. Please try again.');
         });
     }
-
   </script>
-</body>
 </body>
 
 </html>
