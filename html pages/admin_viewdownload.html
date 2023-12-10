@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>View and Download</title>
   <style>
@@ -10,14 +11,16 @@
       padding: 0;
       font-family: 'Arial', sans-serif;
       display: flex;
-      background-color: #f4f4f4; /* Set a light background color */
+      background-color: #f4f4f4;
+      /* Set a light background color */
     }
 
-   
-    
+
+
 
     nav:hover {
-      background-color: #555; /* Change background color on hover */
+      background-color: #555;
+      /* Change background color on hover */
     }
 
     ul {
@@ -45,13 +48,16 @@
     .container {
       flex-grow: 1;
       padding: 20px;
-      position: relative; /* Added position relative */
+      position: relative;
+      /* Added position relative */
     }
 
     .content {
       display: flex;
-      justify-content: center; /* Center align content */
-      align-items: flex-start; /* Align content to the top */
+      justify-content: center;
+      /* Center align content */
+      align-items: flex-start;
+      /* Align content to the top */
     }
 
     .work-details {
@@ -69,18 +75,19 @@
       text-align: center;
     }
 
-    .work-list th, .work-list td {
+    .work-list th,
+    .work-list td {
       border: 1px solid #ddd;
       padding: 12px;
     }
 
     .work-list th {
-      background-color: #4caf50;
+      background-color: #17273b;
       color: #fff;
     }
 
     .download-button {
-      background-color: #4caf50;
+      background-color: #17273b;
       color: #fff;
       padding: 10px;
       border: none;
@@ -91,11 +98,11 @@
     }
 
     .download-button:hover {
-      background-color: #45a049;
+      background-color: #dbae1a;
     }
 
     .more-details-button {
-      background-color: #3498db;
+      background-color: #dbae1a;
       color: #fff;
       padding: 10px;
       border: none;
@@ -107,7 +114,7 @@
     }
 
     .more-details-button:hover {
-      background-color: #2980b9;
+      background-color: #dbae1a;
     }
 
     #dashboard-popup {
@@ -133,14 +140,15 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <nav>
       <ul>
         <li><a href="#" onclick="showContent('workdetails')">
-          <i class="fas fa-file"></i>
-          <!-- <span class="nav-item">Work Details</span> -->
-        </a></li>
+            <i class="fas fa-file"></i>
+            <!-- <span class="nav-item">Work Details</span> -->
+          </a></li>
       </ul>
     </nav>
 
@@ -213,4 +221,5 @@
     }
   </script>
 </body>
+
 </html>
