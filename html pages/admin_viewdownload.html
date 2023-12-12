@@ -147,36 +147,25 @@
       <ul>
         <li><a href="#" onclick="showContent('workdetails')">
             <i class="fas fa-file"></i>
-            <!-- <span class="nav-item">Work Details</span> -->
           </a></li>
       </ul>
     </nav>
 
     <div id="workdetails" class="content">
       <div class="work-details">
-        <!-- <h2>Work Details</h2> -->
-        <table class="work-list">
+        <table class="work-list" id="userTable">
           <thead>
             <tr>
-              <th>Student ID</th>
+              <th>Registration Number</th>
               <th>Name</th>
               <th>Assigned Work</th>
               <th>Status</th>
+              <th>Is Dupsd</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>samuel</td>
-              <td>Essay Writing</td>
-              <td>Pending</td>
-              <td>
-                <button class="download-button" onclick="downloadWork(1)">Download</button>
-                <button class="more-details-button" onclick="showDashboardPopup(1)">More Details</button>
-              </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <!-- Table content will be dynamically populated here -->
           </tbody>
         </table>
       </div>
@@ -185,13 +174,65 @@
     <div id="dashboard-popup">
       <span id="close-dashboard" onclick="closeDashboardPopup()">&times;</span>
       <h2>Dashboard</h2>
-      <!-- Dashboard content goes here -->
-      <p>Efficiency Chart</p>
-      <!-- Additional dashboard details -->
+      <p id="isDuplicateHappend">Efficiency Chart</p>
     </div>
   </div>
 
+
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Fetch data from the first API and populate the table
+      fetch('http://127.0.0.1:5000/get_all_users')
+        .then(response => response.json())
+        .then(data => {
+          const userTableBody = document.querySelector('#userTable tbody');
+          userTableBody.innerHTML = '';
+
+          data.users_data.forEach(user => {
+            const row = `
+            <tr>
+              <td>${user.register_number}</td>
+              <td>${user.name}</td>
+              <td>${user.work}</td>
+              <td id="status_${user.register_number}">Pending</td>
+              <td id="isDuplicateHappend${user.register_number}">-</td>
+              <td>
+                <button class="download-button" id="downloadBtn_${user.register_number}" onclick="downloadWork(${user.register_number})">Download</button>
+                <button class="more-details-button" onclick="showDashboardPopup(${user.register_number})">More Details</button>
+              </td>
+            </tr>
+          `;
+            userTableBody.innerHTML += row;
+
+            // Fetch data from the second API and update the table cells
+            fetch(`http://127.0.0.1:5000/check_upload_status?register_number=${user.register_number}`)
+              .then(response => response.json())
+              .then(uploadStatus => {
+                const statusCell = document.getElementById(`status_${user.register_number}`);
+                const downloadBtn = document.getElementById(`downloadBtn_${user.register_number}`);
+                const isDuplicateHappendCell = document.getElementById(`isDuplicateHappend${user.register_number}`);
+
+                console.log("ssd", uploadStatus)
+
+                if (uploadStatus.status) {
+                  console.log('adwaith');
+                  statusCell.textContent = 'Completed';
+                  downloadBtn.style.display = 'inline-block'; // Show the download button
+                } else {
+                  statusCell.textContent = 'Not Uploaded';
+                  downloadBtn.style.display = 'none'; // Hide the download button
+                }
+
+                isDuplicateHappendCell.textContent = uploadStatus.uploaded_data.isDuplicateHappend ? "Yes" : "No";
+
+                console.log('adwaith');
+              })
+              .catch(error => console.error('Error fetching upload status:', error));
+          });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    });
+
     function showContent(contentId) {
       const contentElements = document.querySelectorAll('.content > div');
       contentElements.forEach(element => {
@@ -202,14 +243,14 @@
       selectedContent.style.display = 'flex';
     }
 
-    function downloadWork(studentId) {
+    function downloadWork(registerNumber) {
       // Implement download logic for the selected student
-      console.log('Downloading work for Student ID:', studentId);
+      console.log('Downloading work for Registration Number:', registerNumber);
     }
 
-    function showDashboardPopup(studentId) {
+    function showDashboardPopup(registerNumber) {
       // Implement displaying the dashboard popup for the selected student
-      console.log('Showing dashboard for Student ID:', studentId);
+      console.log('Showing dashboard for Registration Number:', registerNumber);
 
       const dashboardPopup = document.getElementById('dashboard-popup');
       dashboardPopup.style.display = 'block';
@@ -220,6 +261,8 @@
       dashboardPopup.style.display = 'none';
     }
   </script>
+
+
 </body>
 
 </html>
