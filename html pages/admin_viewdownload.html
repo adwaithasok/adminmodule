@@ -101,21 +101,9 @@
       background-color: #dbae1a;
     }
 
-    .more-details-button {
-      background-color: #dbae1a;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s;
-      margin-top: 10px;
-    }
 
-    .more-details-button:hover {
-      background-color: #dbae1a;
-    }
+
+
 
     #dashboard-popup {
       display: none;
@@ -160,7 +148,7 @@
               <th>Name</th>
               <th>Assigned Work</th>
               <th>Status</th>
-              <th>Is Dupsd</th>
+              <th>Duplication attempted</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -198,7 +186,6 @@
               <td id="isDuplicateHappend${user.register_number}">-</td>
               <td>
                 <button class="download-button" id="downloadBtn_${user.register_number}" onclick="downloadWork(${user.register_number})">Download</button>
-                <button class="more-details-button" onclick="showDashboardPopup(${user.register_number})">More Details</button>
               </td>
             </tr>
           `;
